@@ -4,6 +4,7 @@ import 'package:sams/components/already_have_an_account_acheck.dart';
 import 'package:sams/components/rounded_button.dart';
 import 'package:sams/components/rounded_input_field.dart';
 import 'package:sams/components/rounded_password_field.dart';
+import 'package:sams/screens/home/home_screen.dart';
 import 'package:sams/screens/signup/signup_screen.dart';
 
 import 'background.dart';
@@ -40,7 +41,12 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
