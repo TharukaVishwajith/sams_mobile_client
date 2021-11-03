@@ -6,7 +6,7 @@ class LoginResponseModel {
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
     return LoginResponseModel(
-      token: json["token"] != null ? json["token"] : "",
+      token: json["accessToken"] != null ? json["accessToken"] : "",
       error: json["error"] != null ? json["error"] : "",
     );
   }
@@ -18,15 +18,14 @@ class LoginRequestModel {
 
   LoginRequestModel({
     required this.email,
-    required this.password,
+    required this.password
   });
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'email': email.trim(),
+      'username': email.trim(),
       'password': password.trim(),
     };
-
     return map;
   }
 }

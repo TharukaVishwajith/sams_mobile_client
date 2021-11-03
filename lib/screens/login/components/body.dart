@@ -1,18 +1,27 @@
+import 'dart:developer';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sams/components/already_have_an_account_acheck.dart';
 import 'package:sams/components/rounded_button.dart';
 import 'package:sams/components/rounded_input_field.dart';
 import 'package:sams/components/rounded_password_field.dart';
+import 'package:sams/model/login_model.dart';
 import 'package:sams/screens/home/home_screen.dart';
 import 'package:sams/screens/signup/signup_screen.dart';
+import 'package:sams/service/api_service.dart';
 
 import 'background.dart';
 
 class Body extends StatelessWidget {
-  const Body({
-    Key? key,
+  final LoginRequestModel loginRequestModel = new LoginRequestModel(password: "",email: "");
+
+  Body({
+    Key? key
   }) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +43,39 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Your Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+                loginRequestModel.email = value;
+              },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                loginRequestModel.password = value;
+              },
             ),
             RoundedButton(
               text: "LOGIN",
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
+                APIService apiService = new APIService();
+                apiService.login(loginRequestModel).then((value) {
+                  debugPrint('value: $value');
+                  String s = value.token;
+                  debugPrint('value: $s');
+                  if (value != null) {
+                    if (value.token.isNotEmpty) {
+                      final snackBar = SnackBar(
+                          content: Text("Login Successful"));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                      );
+                    } else {
+                      final snackBar =
+                      SnackBar(content: Text(value.error));
+                    }
+                  }
+                });
+
+
               },
             ),
             SizedBox(height: size.height * 0.03),
