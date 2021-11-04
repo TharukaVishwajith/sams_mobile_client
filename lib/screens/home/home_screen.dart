@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:sams/model/student_model.dart';
 import 'package:sams/service/api_service.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sams/util/image_util.dart';
 
 class HomeScreen extends StatelessWidget {
   // This widget is the root of your application.
@@ -66,13 +69,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
       setState(() {
         result = scanData;
-        APIService().getStudent('s001').then((value) => {
-          print(value.studentNo + '--------' + value.nicNo)
-        });
       });
+      APIService().getStudent('s001').then((value) {
+        print(value.studentNo + '--------' + value.nicNo);
+        _studentDetailDialog(context, value);
+      });
+      await controller.pauseCamera();
+
     });
   }
 
@@ -161,6 +167,37 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  _studentDetailDialog(context, StudentResponse student) {
+    return showDialog(context: context, builder: (context) {
+      return  AlertDialog(
+        title: Text("Connect to new server"),
+        content: Container(
+          // child: Image.asset('assets/images/login_bottom.png'),
+          child: new ImageUtil().imageFromBase64String(student.imageDataBase64),
+        ),
+        actions: <Widget>[
+          MaterialButton(
+            elevation: 5.0,
+            child: Text("Connect"),
+            onPressed: () async {
+              await controller.resumeCamera();
+              Navigator.pop(context,false);
+              Fluttertoast.showToast(
+                  msg: "Camera resumed!",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+            },
+          )
+        ],
+      );
+    });
   }
 
 }
