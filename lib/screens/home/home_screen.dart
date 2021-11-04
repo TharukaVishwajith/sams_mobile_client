@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:sams/service/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
   // This widget is the root of your application.
@@ -68,6 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        APIService().getStudent('s001').then((value) => {
+          print(value.studentNo + '--------' + value.nicNo)
+        });
       });
     });
   }
@@ -121,24 +125,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         result!.format)}   Data: ${result!.code}')
                     : Text('Scan a code'),
               ),
-            ),
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headline4,
-            ),
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -173,4 +162,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
 }

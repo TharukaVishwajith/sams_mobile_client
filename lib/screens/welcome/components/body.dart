@@ -27,33 +27,36 @@ class Body extends StatelessWidget {
               height: size.height * 0.45,
             ),
             SizedBox(height: size.height * 0.05),
-            RoundedButton(
-              text: "LOGIN",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginScreen();
-                    },
-                  ),
-                );
-              },
+            Container(
+              margin: EdgeInsets.all(25),
+              child: ElevatedButton(
+                child: Text('Log In', style: TextStyle(fontSize: 20.0),),
+                style: ElevatedButton.styleFrom(
+                  primary: kPrimaryColor,
+                  minimumSize: Size(150, 50),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return LoginScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
-            RoundedButton(
-              text: "SIGN UP",
-              color: kPrimaryLightColor,
-              textColor: Colors.black,
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SignUpScreen();
-                    },
-                  ),
-                );
-              },
+            Container(
+              // margin: EdgeInsets.all(25),
+              child: ElevatedButton(
+                child: Text('Sign Up', style: TextStyle(fontSize: 20.0),),
+                style: ElevatedButton.styleFrom(
+                  primary: kPrimaryColor,
+                  minimumSize: Size(150, 50),
+                ),
+                onPressed: () {},
+              ),
             ),
           ],
         ),

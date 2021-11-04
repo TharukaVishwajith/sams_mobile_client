@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sams/screens/home/home_screen.dart';
 import 'package:sams/screens/welcome/welcome_screen.dart';
 
 import 'constants.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: WelcomeScreen(),
+      home: HomeScreen(),
     );
   }
 }
