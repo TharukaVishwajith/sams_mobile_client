@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:sams/model/student_model.dart';
+import 'package:sams/screens/home/components/app_drawer.dart';
 import 'package:sams/service/api_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sams/util/image_util.dart';
@@ -95,89 +96,34 @@ class _MyHomePageState extends State<MyHomePage> {
       print(
           '==================================resumeCamera=============================');
     }
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              flex: 5,
-              child: QRView(
-                key: qrKey,
-                onQRViewCreated: _onQRViewCreated,
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: (result != null)
-                    ? Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                    : Text('Scan a code'),
-              ),
-            )
-          ],
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-      ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                flex: 5,
+                child: QRView(
+                  key: qrKey,
+                  onQRViewCreated: _onQRViewCreated,
+                ),
               ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-          ],
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: (result != null)
+                      ? Text(
+                          'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
+                      : Text('Scan a code'),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    );
+        drawer: Container(width: 230, child: AppDrawer()));
   }
 
   _studentDetailDialog(context, StudentResponse student) {
@@ -284,8 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontSize: 16.0);
                       },
                     ),
-                  )
-              ),
+                  )),
             ],
           );
         });
