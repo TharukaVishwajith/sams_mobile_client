@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sams/model/staff_model.dart';
 
 class AppDrawer extends StatefulWidget {
+
+  Staff staff;
+
+  AppDrawer ({ Key? key, required this.staff }): super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _AppDrawerState();
   }
 }
@@ -35,11 +40,19 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
             alignment: Alignment.center,
             child: Text(
               "Tharuka Sarathchandra",
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            alignment: Alignment.center,
+            child: Text(
+              "Lecturer",
+              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15),
             ),
           ),
           Divider(

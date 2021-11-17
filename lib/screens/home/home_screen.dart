@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:sams/bloc/auth_bloc.dart';
+import 'package:sams/model/staff_model.dart';
 import 'package:sams/model/student_model.dart';
 import 'package:sams/screens/home/components/app_drawer.dart';
 import 'package:sams/service/api_service.dart';
@@ -123,7 +126,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        drawer: Container(width: 230, child: AppDrawer()));
+        drawer: Container(width: 230,
+            // child: AppDrawer()
+            child: BlocBuilder<AuthBloc,Staff>(
+              builder: (context, staff){
+                return AppDrawer(staff:staff);
+              }
+            )
+        ));
   }
 
   _studentDetailDialog(context, StudentResponse student) {
