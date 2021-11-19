@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         result = scanData;
       });
-      APIService().getStudent('SE-2013-038').then((value) {
+      APIService().getStudent('SE-2013-037').then((value) {
         print(value.studentNo + '--------' + value.nicNo);
         _studentDetailDialog(context, value);
       });

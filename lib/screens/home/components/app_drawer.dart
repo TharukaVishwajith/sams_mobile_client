@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sams/model/user_model.dart';
+import 'package:sams/screens/login/login_screen.dart';
+import 'package:sams/util/image_util.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -15,7 +19,8 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
+    // final textTheme = theme.textTheme;
+    var user = context.watch<UserModel>().currentUser;
     return Drawer(
       child: ListView(
         // Important: Remove any padding from the ListView.
@@ -29,8 +34,8 @@ class _AppDrawerState extends State<AppDrawer> {
               child: new CircleAvatar(
                 radius: 50.0,
                 backgroundColor: const Color(0xFF778899),
-                backgroundImage: NetworkImage(
-                    "https://scontent.fcmb11-1.fna.fbcdn.net/v/t1.6435-9/106738599_3128599713890082_4023191232412752912_n.jpg?_nc_cat=103&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=_RwQr0pKCtsAX_qAaKK&_nc_ht=scontent.fcmb11-1.fna&oh=d510f9c99d56d699d160c2bb5f0a209f&oe=61B1B5EB"),
+                backgroundImage: ImageUtil()
+                    .imageFromBase64String(user.imageDataBase64).image
               ),
             ),
           ),
@@ -38,7 +43,7 @@ class _AppDrawerState extends State<AppDrawer> {
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
             alignment: Alignment.center,
             child: Text(
-              "Tharuka Sarathchandra",
+              user.name,
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
             ),
           ),
@@ -88,7 +93,13 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: Icon(Icons.logout),
             title: Text('Logout'),
             selected: _selectedDestination == 4,
-            onTap: () => selectDestination(4),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
+              // MaterialPageRoute(builder: (context) => LoginScreen());
+            },
           ),
         ],
       ),

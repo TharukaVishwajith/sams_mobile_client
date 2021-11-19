@@ -8,6 +8,7 @@ import 'package:sams/components/rounded_button.dart';
 import 'package:sams/components/rounded_input_field.dart';
 import 'package:sams/components/rounded_password_field.dart';
 import 'package:sams/model/login_model.dart';
+import 'package:sams/model/user_model.dart';
 import 'package:sams/screens/home/home_screen.dart';
 import 'package:sams/screens/signup/signup_screen.dart';
 import 'package:sams/service/api_service.dart';
@@ -62,9 +63,10 @@ class Body extends StatelessWidget {
                   debugPrint('value: $s');
                   if (value != null) {
                     if (value.token.isNotEmpty) {
+                      _loadUserDetails(value.staffId);
                       final snackBar = SnackBar(
                           content: Text("Login Successful"));
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => HomeScreen()),
                       );
@@ -95,5 +97,11 @@ class Body extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _loadUserDetails(int staffId) {
+    APIService().getStaff(staffId).then((value) {
+      UserModel().updateUser(value);
+    });
   }
 }

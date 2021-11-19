@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:sams/constants.dart';
 import 'package:sams/model/student_model.dart';
+import 'package:sams/model/user_model.dart';
 
 import '../model/login_model.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,18 @@ class APIService {
     final response = await http.get(url ,headers: {'Content-type': 'application/json'});
     if (response.statusCode == 200 || response.statusCode == 400) {
       return StudentResponse.fromJson(
+        json.decode(response.body),
+      );
+    } else {
+      throw Exception('Failed to load data!');
+    }
+  }
+
+  Future<User> getStaff(int staffId) async {
+    var url = Uri.parse(serverUrl + '/api/' + apiVersion + '/staff?staffId=' + staffId.toString());
+    final response = await http.get(url ,headers: {'Content-type': 'application/json'});
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return User.fromJson(
         json.decode(response.body),
       );
     } else {
