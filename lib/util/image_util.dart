@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 class ImageUtil {
   Image imageFromBase64String(String? base64String) {
-    if (base64String == null) return Image.asset('assets/images/login_bottom.png');
+    if (base64String == null || base64String == "") return Image.asset('assets/images/no_image.png');
     return Image.memory(base64Decode(base64String));
   }
 
